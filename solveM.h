@@ -2,6 +2,7 @@
 #include "parameters.h"
 #include <vector>
 using namespace std;
+
 class solveM
 {
 private:
@@ -17,5 +18,9 @@ public:
     void calcParameter();
     void solveMatrix(vector<vector<double>> A, vector<vector<double>> B, vector<double> b);
     void solve();
-   
+    std::vector<double> m_Source_Terms;
+public:
+    solveM(parameters &p);
+    void createMesh();
+    void calcParameter();
 };

@@ -1,10 +1,12 @@
 #include "solveM.h"
 #include "linearSolving.h"
+
 solveM::solveM(parameters &p)
 {
     m_InputParameter = p;
     m_Matrix = {};
     L_Matrix = {};
+
     m_Source_Terms = {};
     std::cout << "================================================" << std::endl;
     std::cout << "            solve_1D_DiffusionEquation          " << std::endl;
@@ -98,4 +100,14 @@ void solveM::solve()
     solveM::calcParameter();
     solveMatrix(m_Matrix,L_Matrix, m_Source_Terms);
     std::cout << "Done." << std::endl;
+}
+    std::cout << "---------------------------------------" << std::endl;
+    std::cout << "-       Calculating Source Term       -" << std::endl;
+    std::cout << "---------------------------------------" << std::endl;
+    m_Source_Terms.push_back(m_InputParameter.tempLeft*(2*DA) + HS);
+    for (int i = 1; i < m_InputParameter.nCells-1; i++)
+    {
+        m_Source_Terms.push_back(0);
+    }
+    m_Source_Terms.push_back(m_InputParameter.tempRight*(2*DA) + HS);
 }
