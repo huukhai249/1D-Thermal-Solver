@@ -1,9 +1,12 @@
 #include "solveM.h"
+#include "linearSolving.h"
 
 solveM::solveM(parameters &p)
 {
     m_InputParameter = p;
     m_Matrix = {};
+    L_Matrix = {};
+
     m_Source_Terms = {};
     std::cout << "================================================" << std::endl;
     std::cout << "            solve_1D_DiffusionEquation          " << std::endl;
@@ -54,7 +57,50 @@ void solveM::calcParameter()
     // boundary right
     m_Matrix.at(m_InputParameter.nCells - 1).at(m_InputParameter.nCells - 2) = -DA;
     m_Matrix.at(m_InputParameter.nCells - 1).at(m_InputParameter.nCells - 1) = DA + 0 + 2 * DA;
-    
+
+    std::cout << "---------------------------------------" << std::endl;
+    std::cout << "-       Calculating Source Term       -" << std::endl;
+    std::cout << "---------------------------------------" << std::endl;
+    m_Source_Terms.push_back(m_InputParameter.tempLeft * (2 * DA) + HS);
+    for (int i = 1; i < m_InputParameter.nCells - 1; i++)
+    {
+        m_Source_Terms.push_back(0);
+    }
+    m_Source_Terms.push_back(m_InputParameter.tempRight * (2 * DA) + HS);
+}
+
+std::vector<double> solveM::getSolution() const
+{
+    return m_Solutions;
+}
+
+void solveM::solveMatrix(vector<vector<double>> A, vector<vector<double>> B, vector<double> b)
+{
+    std::cout << "---------------------------------------" << std::endl;
+    std::cout << "-              solveMatrix            -" << std::endl;
+    std::cout << "---------------------------------------" << std::endl;
+    try
+    {
+        InitlowerMatrixBase(B, b.size());
+        decompositeMatrix(A, B, b.size());
+        printMatrix(A,b.size());
+        cout << "=============================="<<endl;
+        printMatrix(B,b.size());
+        
+        // m_Solutions = solve_linear_equation(A, b);
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+void solveM::solve()
+{
+    solveM::createMesh();
+    solveM::calcParameter();
+    solveMatrix(m_Matrix,L_Matrix, m_Source_Terms);
+    std::cout << "Done." << std::endl;
+}
     std::cout << "---------------------------------------" << std::endl;
     std::cout << "-       Calculating Source Term       -" << std::endl;
     std::cout << "---------------------------------------" << std::endl;
