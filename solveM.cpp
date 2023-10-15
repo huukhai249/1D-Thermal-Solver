@@ -12,7 +12,29 @@ solveM::solveM(parameters &p)
     std::cout << "            solve_1D_DiffusionEquation          " << std::endl;
     std::cout << "================================================" << std::endl;
 }
-
+// create lower matrix base
+void InitlowerMatrixBase(vector<vector<double>> &L_matrix, int size)
+{
+    std::vector<double> n_row;
+    for (int i = 0; i < size; i++)
+    {
+        n_row.push_back(0);
+    }
+    for (int j = 0; j < size; j++)
+    {
+        L_matrix.push_back(n_row);
+    }
+    for (int idx = 0; idx < size; idx++)
+    {
+        for (int idy = 0; idy < size; idy++)
+        {
+            if (idx == idy)
+            {
+                L_matrix.at(idx).at(idy) = 1;
+            }
+        }
+    }
+}
 void solveM::createMesh()
 {
     std::cout << "---------------------------------------" << std::endl;
@@ -82,11 +104,13 @@ void solveM::solveMatrix(vector<vector<double>> A, vector<vector<double>> B, vec
     try
     {
         InitlowerMatrixBase(B, b.size());
+        printMatrix(B, b.size());
+        cout << "==============================" << endl;
         decompositeMatrix(A, B, b.size());
-        printMatrix(A,b.size());
-        cout << "=============================="<<endl;
-        printMatrix(B,b.size());
-        
+        printMatrix(A, b.size());
+        cout << "==============================" << endl;
+        printMatrix(B, b.size());
+
         // m_Solutions = solve_linear_equation(A, b);
     }
     catch (const std::exception &e)
@@ -98,16 +122,6 @@ void solveM::solve()
 {
     solveM::createMesh();
     solveM::calcParameter();
-    solveMatrix(m_Matrix,L_Matrix, m_Source_Terms);
+    solveMatrix(m_Matrix, L_Matrix, m_Source_Terms);
     std::cout << "Done." << std::endl;
-}
-    std::cout << "---------------------------------------" << std::endl;
-    std::cout << "-       Calculating Source Term       -" << std::endl;
-    std::cout << "---------------------------------------" << std::endl;
-    m_Source_Terms.push_back(m_InputParameter.tempLeft*(2*DA) + HS);
-    for (int i = 1; i < m_InputParameter.nCells-1; i++)
-    {
-        m_Source_Terms.push_back(0);
-    }
-    m_Source_Terms.push_back(m_InputParameter.tempRight*(2*DA) + HS);
 }
