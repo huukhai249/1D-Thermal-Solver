@@ -7,14 +7,13 @@
 %
 %    [Chapter 3]
 %
-%    Author: Dr. Aidan Wimshurst (FluidMechanics101)
+%    Author: HuuKhai-Nguyen
 %
-%    - Email: FluidMechanics101@gmail.com
-%    - Web  : https://www.fluidmechanics101.com
-%    - YouTube: Fluid Mechanics 101
+%    - Email: khaikn249@gmail.com
+%    - LinkedIn: https://www.linkedin.com/in/khai-nguyen-741b2519a/
+%    - Lab website: https://simtec.vn/
 %
-%    Version 1.0.0 05/08/2021
-%    - Initial script
+%   
 %
 %--------------------------------------------------------------------------
 close all; clear; clc
@@ -72,11 +71,6 @@ fprintf('================================================\n');
 fprintf('\n');
 fprintf('   solve1DConvectionDiffusionEquation.m\n')
 fprintf('\n')
-fprintf(' - Fluid Mechanics 101\n')
-fprintf(' - Author: Dr. Aidan Wimshurst\n')
-fprintf(' - Contact: FluidMechanics101@gmail.com\n')
-fprintf('\n')
-fprintf(' [Exercise 1: Chapter 3]\n')
 fprintf('================================================\n')
 
 %--------------------------------------------------------------------------
