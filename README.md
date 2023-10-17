@@ -4,7 +4,7 @@ This is a 1D thermal solver using C++ code based on the finite volume method.
 
 **Example 1:** Only convection - diffusion terms in 1D governed by equation: 
 
-grad*(rho*Cp*U*T) = grad*(k*grad(T)) + S
+    grad*(rho*Cp*U*T) = grad*(k*grad(T)) + S
 
 Other conditions like the figure below:
 
