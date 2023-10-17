@@ -9,3 +9,4 @@ This is a 1D thermal solver using C++ code based on the finite volume method.
 Other conditions like the figure below:
 
 ![Example1](https://github.com/huukhai249/1D-Thermal-Solver/assets/63088885/06a4670e-1453-4db4-89e7-f5e02a41265a)
+![11111](https://github.com/huukhai249/1D-Thermal-Solver/assets/63088885/ec686ec5-ce92-4db7-ac6e-9d676ef28af1)
