@@ -32,39 +32,70 @@ void solveM::calcParameter()
     std::cout << "---------------------------------------" << std::endl;
     std::cout << "-    Calculating Matrix Coefficients  -" << std::endl;
     std::cout << "---------------------------------------" << std::endl;
+    /*===================== @ for convecion - diffusion terms only =================
 
+        -- Interior cells --
+            aL = Dl*Al + Fl/2
+            aR = Dr*Ar - Fl/2
+            Sp = 0; Su = HS*V
+
+        -- Boundary cells --
+            aL_left = 0;                         aL_right = Dr*Ar + Fr/2
+            aR_left = Dr*Ar - Fr/2;              aR_right = 0;
+            Sp_left = -(2DlAl+Fl);               Sp_right = -(2DrAr-Fr)
+            Su_left = TA*(2DlAl+Fl) + HS*V;      Su_right = TB*(2DrAr-Fr) + HS*V
+                            aP = aL + aR + (Fr-Fl) - Sp
+                            where D = k/d; F = rho*Cp*U*A
+    ===============================================================================*/
     // Calculating the cell length -- this is also distance between cell's centroid
     double Lcell = m_InputParameter.getBarLength() / m_InputParameter.getnCells();
     // calc materials properties
     double DA = static_cast<double>(m_InputParameter.getThermalConductivity() * m_InputParameter.getArea() / Lcell);
+    // convection coeficients, for Ar=Af -> Fr= Fl = F
+    double F = m_InputParameter.getRho() * m_InputParameter.getCp() * m_InputParameter.getVelocity() * m_InputParameter.getArea();
     // Heat Source
     double HS = m_InputParameter.getheatSourcePerVol() * m_InputParameter.getArea() * Lcell;
+    double aL_left = 0;
+    double aR_left = DA - F / 2;
+    double Sp_left = -(2 * DA + F);
+    double aP_left = aL_left + aR_left - Sp_left;
     // boundary left
-    m_Matrix.at(0).at(0) = DA + 0 + 2 * DA;
-    m_Matrix.at(0).at(1) = -DA;
+    m_Matrix.at(0).at(0) = aP_left;
+    m_Matrix.at(0).at(1) = -aR_left;
     // interior indices
+    double aL_interior = DA + F / 2;
+    double aR_interior = DA - F / 2;
+    double Sp_interior = 0;
+    double aP_interior = aL_interior + aR_interior - Sp_left;
     int index_x = 1, index_y = 1;
     while (index_y < m_InputParameter.getnCells() - 1)
     {
-        m_Matrix.at(index_y).at(index_x - 1) = -DA;
-        m_Matrix.at(index_y).at(index_x) = 2 * DA;
-        m_Matrix.at(index_y).at(index_x + 1) = -DA;
+        m_Matrix.at(index_y).at(index_x - 1) = -aL_interior;
+        m_Matrix.at(index_y).at(index_x) = aP_interior;
+        m_Matrix.at(index_y).at(index_x + 1) = -aR_interior;
         index_x++;
         index_y++;
     }
     // boundary right
-    m_Matrix.at(m_InputParameter.getnCells() - 1).at(m_InputParameter.getnCells() - 2) = -DA;
-    m_Matrix.at(m_InputParameter.getnCells() - 1).at(m_InputParameter.getnCells() - 1) = DA + 0 + 2 * DA;
+    double aL_right = DA + F / 2;
+    double aR_right = 0;
+    double Sp_right = -(2 * DA - F);
+    double aP_right = aL_right + aR_right - Sp_right;
+    m_Matrix.at(m_InputParameter.getnCells() - 1).at(m_InputParameter.getnCells() - 1) = aP_right;
+    m_Matrix.at(m_InputParameter.getnCells() - 1).at(m_InputParameter.getnCells() - 2) = -aL_right;
 
     std::cout << "---------------------------------------" << std::endl;
     std::cout << "-       Calculating Source Term       -" << std::endl;
     std::cout << "---------------------------------------" << std::endl;
-    m_Source_Terms.push_back(m_InputParameter.getTempLeft() * (2 * DA) + HS);
+    // Boundary Left
+    m_Source_Terms.push_back(m_InputParameter.getTempLeft() * (2 * DA + F) + HS);
+    // Interior cells
     for (int i = 1; i < m_InputParameter.getnCells() - 1; i++)
     {
-        m_Source_Terms.push_back(0);
+        m_Source_Terms.push_back(HS);
     }
-    m_Source_Terms.push_back(m_InputParameter.getTempRight() * (2 * DA) + HS);
+    // Boundary right
+    m_Source_Terms.push_back(m_InputParameter.getTempRight() * (2 * DA - F) + HS);
 }
 
 std::vector<double> solveM::getSolution() const
@@ -79,13 +110,7 @@ void solveM::solveMatrix(vector<vector<double>> A, vector<vector<double>> B, vec
     std::cout << "---------------------------------------" << std::endl;
     try
     {
-        InitlowerMatrixBase(B, b.size());
-        decompositeMatrix(A, B, b.size());
-        printMatrix(A,b.size());
-        cout << "=============================="<<endl;
-        printMatrix(B,b.size());
-        
-        // m_Solutions = solve_linear_equation(A, b);
+        // insert funtion to solve linear equation.
     }
     catch (const std::exception &e)
     {
@@ -96,6 +121,6 @@ void solveM::solve()
 {
     solveM::createMesh();
     solveM::calcParameter();
-    solveMatrix(m_Matrix,L_Matrix, m_Source_Terms);
+    solveMatrix(m_Matrix, L_Matrix, m_Source_Terms);
     std::cout << "Done." << std::endl;
 }

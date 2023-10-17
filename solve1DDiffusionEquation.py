@@ -5,13 +5,11 @@
 #    - A script to set up and solve the 1D diffusion equation for conduction
 #    in a bar
 #
-#    [Chapter 2]
+#     Author: HuuKhai-Nguyen
 #
-#    Author: Dr. Aidan Wimshurst (FluidMechanics101)
-#
-#    - Email: FluidMechanics101@gmail.com
-#    - Web  : https://www.fluidmechanics101.com
-#    - YouTube: Fluid Mechanics 101
+#    - Email: khaikn249@gmail.com
+#    - LinkedIn: https://www.linkedin.com/in/khai-nguyen-741b2519a/
+#    - Lab website: https://simtec.vn/
 #
 #    Version 1.0.0 11/05/2019
 #    - Initial script
@@ -74,11 +72,6 @@ print ('================================================')
 print ('')
 print ('   solve1DDiffusionEquation.py')
 print ('')
-print (' - Fluid Mechanics 101')
-print (' - Author: Dr. Aidan Wimshurst')
-print (' - Contact: FluidMechanics101@gmail.com')
-print ('')
-print (' [Exercise 1: Chapter 1]')
 print ('================================================')
 
 ###############################################################################
