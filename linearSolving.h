@@ -13,7 +13,19 @@ bool is_invertible(vector<vector<double>> &A)
     }
     return det != 0;
 }
-
+// create lower matrix base
+void InitlowerMatrixBase(vector<vector<double>> &L_matrix, int size)
+{
+    std::vector<double> n_row;
+    for (int i = 0; i < size; i++)
+    {
+        n_row.push_back(0);
+    }
+    for (int j = 0; j < size; j++)
+    {
+        L_matrix.push_back(n_row);
+    }
+}
 /// This step will decomposite square matric A = L*U. This often called Lower-Upper method to solve linear equation.
 bool decompositeMatrix(vector<vector<double>> &Matrix, vector<vector<double>> &L_Matrix, int rowsize)
 {
@@ -40,7 +52,6 @@ bool decompositeMatrix(vector<vector<double>> &Matrix, vector<vector<double>> &L
         }
         step_++;
     }
-   
     return true;
 }
 void printMatrix(vector<vector<double>> &Matrix, int rowsize)
