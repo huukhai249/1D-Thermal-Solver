@@ -1,7 +1,7 @@
+#pragma once
 #include "parameters.h"
 #include <vector>
 using namespace std;
-
 class solveM
 {
 private:
@@ -17,4 +17,5 @@ public:
     void calcParameter();
     void solveMatrix(vector<vector<double>> A, vector<vector<double>> B, vector<double> b);
     void solve();
+   
 };
