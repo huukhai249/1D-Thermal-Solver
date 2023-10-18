@@ -9,6 +9,10 @@ This is a 1D thermal solver using C++ code based on the finite volume method.
 Other conditions like the figure below:
 
 ![Example1](https://github.com/huukhai249/1D-Thermal-Solver/assets/63088885/06a4670e-1453-4db4-89e7-f5e02a41265a)
-![11111](https://github.com/huukhai249/1D-Thermal-Solver/assets/63088885/ec686ec5-ce92-4db7-ac6e-9d676ef28af1)
-![1123](https://github.com/huukhai249/1D-Thermal-Solver/assets/63088885/915dc134-d54e-4d8c-9a24-a19966827fbe)
-![1134](https://github.com/huukhai249/1D-Thermal-Solver/assets/63088885/4cac4426-bf7c-4314-b57c-be95463bd29b)
+
+The Gauss–Seidel method is an iterative technique for solving a square system of n (n=3) linear equations with unknown x.
+Given Ax=B, to find the system of equation x which satisfies this condition.
+In more detail, A, x, and b in their components are :
+![1122](https://github.com/huukhai249/1D-Thermal-Solver/assets/63088885/68e00227-b2fa-4329-9805-e162961a7379)
+Thus, the general solution of equation Ax = b obeys:
+![1234](https://github.com/huukhai249/1D-Thermal-Solver/assets/63088885/ac81c5ad-56d1-49fe-82fa-32c2d3ceef58)
