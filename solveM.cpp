@@ -1,10 +1,10 @@
 #include "solveM.h"
 #include "linearSolving.h"
+
 solveM::solveM(parameters &p)
 {
     m_InputParameter = p;
     m_Matrix = {};
-    L_Matrix = {};
     m_Source_Terms = {};
     std::cout << "================================================" << std::endl;
     std::cout << "            solve_1D_DiffusionEquation          " << std::endl;
@@ -83,7 +83,12 @@ void solveM::calcParameter()
     double aP_right = aL_right + aR_right - Sp_right;
     m_Matrix.at(m_InputParameter.getnCells() - 1).at(m_InputParameter.getnCells() - 1) = aP_right;
     m_Matrix.at(m_InputParameter.getnCells() - 1).at(m_InputParameter.getnCells() - 2) = -aL_right;
-
+    for(int i=0; i<m_InputParameter.getnCells(); i++){
+        for(int j=0; j<m_InputParameter.getnCells(); j++){
+            std::cout<<m_Matrix.at(1).at(j)<<" ";
+        }
+        std::cout<<"\n";
+    }
     std::cout << "---------------------------------------" << std::endl;
     std::cout << "-       Calculating Source Term       -" << std::endl;
     std::cout << "---------------------------------------" << std::endl;
@@ -103,14 +108,15 @@ std::vector<double> solveM::getSolution() const
     return m_Solutions;
 }
 
-void solveM::solveMatrix(vector<vector<double>> A, vector<vector<double>> B, vector<double> b)
+void solveM::solveMatrix(vector<vector<double>> A, vector<double> b)
 {
     std::cout << "---------------------------------------" << std::endl;
     std::cout << "-              solveMatrix            -" << std::endl;
     std::cout << "---------------------------------------" << std::endl;
     try
     {
-        // insert funtion to solve linear equation.
+      linearSolving l(m_InputParameter);
+      m_Solutions = l.gausee_seidel_solving(A,b);
     }
     catch (const std::exception &e)
     {
@@ -121,6 +127,13 @@ void solveM::solve()
 {
     solveM::createMesh();
     solveM::calcParameter();
-    solveMatrix(m_Matrix, L_Matrix, m_Source_Terms);
+    std::cout<<"hhahhahah"<<endl;
+    for(int i=0; i<m_InputParameter.getnCells(); i++){
+        for(int j=0; j<m_InputParameter.getnCells(); j++){
+            std::cout<<m_Matrix.at(1).at(j)<<" ";
+        }
+        std::cout<<"\n";
+    }
+    solveMatrix(m_Matrix, m_Source_Terms);
     std::cout << "Done." << std::endl;
 }

@@ -48,11 +48,11 @@ void parameters::setBarLength(const double &L)
     barLength = L;
 }
 
-double parameters::getnCells() const
+int parameters::getnCells() const
 {
     return nCells;
 }
-void parameters::setnCells(const double &cells)
+void parameters::setnCells(const int &cells)
 {
     nCells = cells;
 }
@@ -177,4 +177,25 @@ void parameters::readingParameters()
     default:
         break;
     }
+    cout << "Maximun iteration = ";
+    setMaxiteration(getPara<int>());
+    cout << "Tolerance = ";
+    setTOL(getPara<double>());
+}
+int parameters::getMaxiteration() const
+{
+    return Niteration;
+}
+void parameters::setMaxiteration(const int &N)
+{
+    Niteration = N;
+}
+
+double parameters::getTOL() const
+{
+    return TOL;
+}
+void parameters::setTOL(const double &tolerance)
+{
+    TOL = tolerance;
 }
