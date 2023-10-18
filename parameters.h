@@ -3,7 +3,7 @@
 #include <vector>
 class parameters
 {
-    private:
+private:
     // Thermal Conductivity of the bar (W/mK)
     double k;
     // Cross-sectional Area of the bar (m2)
@@ -11,7 +11,7 @@ class parameters
     // Length of the bar (m)
     double barLength;
     // Number of cells in the mesh
-    double nCells;
+    int nCells;
     //   Temperature at the left hand side of the bar (deg C)
     double tempLeft;
     // Temperature at the left hand side of the bar (deg C)
@@ -24,38 +24,49 @@ class parameters
     double Cp;
     // velocity for 1-Dimesion
     double U;
+    // tolerance
+    double TOL;
+    // maximum number of iterations
+    int Niteration;
 
-public:  
- //getter-setter func
+public:
+    // getter-setter func
     double getThermalConductivity() const;
-    void setThermalConductivity(const double& ther); 
+    void setThermalConductivity(const double &ther);
 
     double getArea() const;
-    void setArea(const double& ther); 
-    
+    void setArea(const double &area);
+
     double getBarLength() const;
-    void setBarLength(const double& ther); 
-    
-    double getnCells() const;
-    void setnCells(const double& ther); 
-    
+    void setBarLength(const double &L);
+
+    int getnCells() const;
+    void setnCells(const int &cells);
+
     double getTempRight() const;
-    void setTempRight(const double& ther); 
+    void setTempRight(const double &tempR);
 
     double getTempLeft() const;
-    void settempLeft(const double& ther); 
+    void settempLeft(const double &tempL);
 
     double getheatSourcePerVol() const;
-    void setheatSourcePerVol(const double& ther); 
+    void setheatSourcePerVol(const double &Hs);
 
     double getRho() const;
-    void setRho(const double& ther); 
+    void setRho(const double &rho);
 
     double getCp() const;
-    void setCp(const double& ther); 
+    void setCp(const double &cp);
 
     double getVelocity() const;
-    void setVelocity(const double& ther); 
+    void setVelocity(const double &V);
+
+    int getMaxiteration() const;
+    void setMaxiteration(const int &N);
+
+    double getTOL() const;
+    void setTOL(const double &tol);
+
     // Reading parameters
     void readingDiffusionOnly();
     void readingDiffusion_ConvectionPara();
