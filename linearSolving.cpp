@@ -30,23 +30,14 @@ bool linearSolving::is_invertible(std::vector<std::vector<double>> A)
     return det != 0;
 }
 
-double linearSolving::sigma(int start, int end, std::vector<double> a, std::vector<double> x)
+double linearSolving::productof(double a, double b)
 {
-    if (start == end)
-        return 0;
-    else
-    {
-        double SUM = 0.0;
-        for (int i = start; i <= end; i++)
-        {
-            SUM = SUM + a.at(i) * x.at(i);
-        }
-        return SUM;
-    }
+    return a * b;
 }
+
 std::vector<double> linearSolving::gausee_seidel_solving(std::vector<std::vector<double>> Aij, std::vector<double> b)
 {
-    std::cout << "================= Start program =======================" << std::endl
+    std::cout << "================= Start program =================" << std::endl
               << paramInput->getMaxiteration();
     // To store solution in this iterior
     std::vector<double> current_solution = initZeroVector(paramInput->getnCells());
@@ -56,14 +47,25 @@ std::vector<double> linearSolving::gausee_seidel_solving(std::vector<std::vector
 
     while (interior <= paramInput->getMaxiteration())
     {
-        std::cout << "===========================#Iterior " << interior << "===============================" << std::endl;
+        std::cout << "================= #Iterior " << interior << "====================" << std::endl;
         std::vector<double> TOLERANCE;
         int curentRowIdx = 0;
         while (curentRowIdx < paramInput->getnCells())
         {
             std::vector<double> currentRow = Aij.at(curentRowIdx);
             pre_solution = current_solution;
-            current_solution.at(curentRowIdx) = 1 / (Aij.at(curentRowIdx).at(curentRowIdx)) * (-sigma(0, curentRowIdx - 2, currentRow, current_solution) - sigma(curentRowIdx + 1, paramInput->getnCells() - 1, currentRow, pre_solution) + b.at(curentRowIdx));
+            current_solution.at(curentRowIdx) = productof(productof((1 / (Aij.at(curentRowIdx).at(curentRowIdx))),
+                                                                    [currentRow, current_solution, curentRowIdx]() -> double
+                                                                    {
+                                                                        // do it in here
+                                                                        return (double)5;
+                                                                    }()),
+                                                          [currentRow, pre_solution, curentRowIdx]() -> double
+                                                          {
+                                                              return (double)5;
+                                                          }()) +
+                                                (1 / (Aij.at(curentRowIdx).at(curentRowIdx))) * b.at(curentRowIdx);
+
             double err = std::abs((current_solution.at(curentRowIdx) - pre_solution.at(curentRowIdx)) * (1 / current_solution.at(curentRowIdx))) * 100;
             TOLERANCE.push_back(err);
             std::cout << "*            X[" << curentRowIdx << "] = " << current_solution.at(curentRowIdx) << ", tolerance " << err << "%         " << std::endl;

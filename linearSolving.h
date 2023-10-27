@@ -20,6 +20,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+
 class parameters;
 class linearSolving
 {
@@ -28,7 +29,7 @@ private:
 
 public:
     bool is_invertible(std::vector<std::vector<double>> A);
-    double sigma(int start, int end, std::vector<double> a, std::vector<double> x);
+    double productof(double a, double b);
     std::vector<double> gausee_seidel_solving(std::vector<std::vector<double>> Aij, std::vector<double> b);
     void solve();
     linearSolving(parameters &p);

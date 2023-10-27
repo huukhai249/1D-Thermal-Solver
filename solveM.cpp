@@ -66,7 +66,7 @@ void solveM::calcParameter()
     double aL_interior = DA + F / 2;
     double aR_interior = DA - F / 2;
     double Sp_interior = 0;
-    double aP_interior = aL_interior + aR_interior - Sp_left;
+    double aP_interior = aL_interior + aR_interior - Sp_interior;
     int index_x = 1, index_y = 1;
     while (index_y < m_InputParameter.getnCells() - 1)
     {
@@ -85,7 +85,7 @@ void solveM::calcParameter()
     m_Matrix.at(m_InputParameter.getnCells() - 1).at(m_InputParameter.getnCells() - 2) = -aL_right;
     for(int i=0; i<m_InputParameter.getnCells(); i++){
         for(int j=0; j<m_InputParameter.getnCells(); j++){
-            std::cout<<m_Matrix.at(1).at(j)<<" ";
+            std::cout<<m_Matrix.at(i).at(j)<<" ";
         }
         std::cout<<"\n";
     }
@@ -130,7 +130,7 @@ void solveM::solve()
     std::cout<<"hhahhahah"<<endl;
     for(int i=0; i<m_InputParameter.getnCells(); i++){
         for(int j=0; j<m_InputParameter.getnCells(); j++){
-            std::cout<<m_Matrix.at(1).at(j)<<" ";
+            std::cout<<m_Matrix.at(i).at(j)<<" ";
         }
         std::cout<<"\n";
     }
