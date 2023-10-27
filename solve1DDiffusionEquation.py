@@ -11,15 +11,6 @@
 #    - LinkedIn: https://www.linkedin.com/in/khai-nguyen-741b2519a/
 #    - Lab website: https://simtec.vn/
 #
-#    Version 1.0.0 11/05/2019
-#    - Initial script
-#
-#    Version 1.0.1 19/07/2021
-#    - reformatted for consistency with python style guide
-#
-#    Version 1.0.5 15/04/2022
-#     - removed latex font from plots
-#     - updated for python 2.7/python 3 compatability
 #
 ###############################################################################
 #
