@@ -1,6 +1,4 @@
 #include "solveM.h"
-#include "linearSolving.h"
-
 solveM::solveM(parameters &p)
 {
     m_InputParameter = p;
@@ -115,8 +113,7 @@ void solveM::solveMatrix(vector<vector<double>> A, vector<double> b)
     std::cout << "---------------------------------------" << std::endl;
     try
     {
-      linearSolving l(m_InputParameter);
-      m_Solutions = l.gausee_seidel_solving(A,b);
+     //
     }
     catch (const std::exception &e)
     {
